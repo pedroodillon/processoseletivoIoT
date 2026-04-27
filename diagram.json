@@ -1,7 +1,91 @@
 {
   "version": 1,
-  "author": "Uri Shaked",
+  "author": "Pedro",
   "editor": "wokwi",
-  "parts": [ { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {} } ],
-  "connections": [ [ "esp:TX", "$serialMonitor:RX", "", [] ], [ "esp:RX", "$serialMonitor:TX", "", [] ] ]
+  "parts": [
+    {
+      "type": "wokwi-esp32-devkit-v1",
+      "id": "esp",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "button",
+      "top": -70,
+      "left": -170,
+      "attrs": {
+        "color": "blue",
+        "label": "Inspect"
+      }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot",
+      "top": 100,
+      "left": -190,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledGreen",
+      "top": -80,
+      "left": 230,
+      "attrs": {
+        "color": "green",
+        "label": "Approved"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledYellow",
+      "top": 0,
+      "left": 230,
+      "attrs": {
+        "color": "yellow",
+        "label": "Warning"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledRed",
+      "top": 80,
+      "left": 230,
+      "attrs": {
+        "color": "red",
+        "label": "Rejected"
+      }
+    },
+    {
+      "type": "wokwi-buzzer",
+      "id": "buzzer",
+      "top": 180,
+      "left": 220,
+      "attrs": {
+        "volume": "0.1"
+      }
+    }
+  ],
+  "connections": [
+    ["esp:3V3", "button:1.l", "red", ["h-80", "v-60"]],
+    ["button:2.l", "esp:14", "blue", ["h80", "v60"]],
+
+    ["esp:3V3", "pot:VCC", "red", ["h-120", "v100"]],
+    ["esp:GND.1", "pot:GND", "black", ["h-130", "v130"]],
+    ["pot:SIG", "esp:34", "green", ["h90", "v-40"]],
+
+    ["ledGreen:A", "esp:25", "green", ["h-80"]],
+    ["ledGreen:C", "esp:GND.2", "black", ["h-100", "v80"]],
+
+    ["ledYellow:A", "esp:26", "yellow", ["h-80"]],
+    ["ledYellow:C", "esp:GND.2", "black", ["h-100"]],
+
+    ["ledRed:A", "esp:27", "red", ["h-80"]],
+    ["ledRed:C", "esp:GND.2", "black", ["h-100", "v-80"]],
+
+    ["buzzer:1", "esp:33", "orange", ["h-80"]],
+    ["buzzer:2", "esp:GND.2", "black", ["h-100", "v-120"]]
+  ],
+  "dependencies": {}
 }
