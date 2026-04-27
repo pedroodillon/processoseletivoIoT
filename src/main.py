@@ -1,6 +1,9 @@
 from machine import Pin, ADC, PWM
 import time
 
+print("Teste")
+print("Edge AI inspection simulator starting...")
+
 # =========================
 # Pin configuration
 # =========================
