@@ -1,331 +1,134 @@
-# Processo Seletivo – Intensivo Maker | IoT
-## Etapa Prática – Sistemas Embarcados
-
-Bem-vindo(a) à **etapa prática do processo seletivo para o Intensivo Maker | IoT**.
-
-Esta atividade tem como objetivo avaliar suas competências em **Sistemas Embarcados**, com foco em **organização de projeto, lógica de firmware e simulação de hardware**, a partir da aplicação prática dos conhecimentos adquiridos nos cursos EAD da etapa anterior.
-
-> 🎯 **Objetivo principal**  
-> Avaliar sua capacidade de **planejar, estruturar e desenvolver** uma solução funcional de sistemas embarcados, seguindo boas práticas de engenharia.
-
----
-
-## 🏁 Passo 0 – Antes de Tudo
-
-Se você **nunca utilizou Git ou GitHub**, não se preocupe.  
-Siga atentamente os passos abaixo — eles fazem parte do processo de aprendizagem esperado.
-
----
-
-### 1️⃣ Criação de Conta no GitHub
-
-1. Acesse: https://github.com  
-2. Clique em **Sign up**  
-3. Crie sua conta gratuita seguindo as instruções da plataforma  
-
-> 📌 O GitHub será utilizado para:
-> - Envio do seu projeto  
-> - Versionamento do código  
-> - Correção e validação automática via GitHub Actions  
-
----
-
-### 2️⃣ Instalação do Git
-
-O **Git** é a ferramenta responsável pelo controle de versões do seu código.
-
-### Windows
-Baixe e instale o **Git Bash**:  
-https://git-scm.com/downloads
-
-### Linux / macOS
-Verifique se o Git já está instalado:
-
-```bash
-git --version
-```
-> Caso não esteja, instale pelo gerenciador de pacotes do seu sistema.
-
-## ⚙ Passo 1 – Preparando o Ambiente
-
-Para desenvolver o desafio, você deverá criar uma cópia deste repositório no seu GitHub.
-
-### 1️⃣ Fork do Repositório
-No canto superior direito desta página, clique em Fork
-
-<img width="219" height="45" alt="image" src="https://github.com/user-attachments/assets/5d629626-513a-445c-ba0f-e5bb3e225187" />
-
-
-Uma cópia do repositório será criada no seu perfil do GitHub
-
-> 🔎 O Fork permite que você trabalhe de forma independente, sem alterar o repositório original do processo seletivo.
-
-### 2️⃣ Clone do Repositório
-
-No repositório do seu Fork, clique em **<> Code**
-
-<img width="149" height="52" alt="image" src="https://github.com/user-attachments/assets/abbd331b-a005-4633-89c6-afd16acbe828" />
-
-Copie a URL e execute no terminal:
-
-```bash
-git clone https://github.com/SEU_USUARIO/nome-do-repositorio.git
-cd nome-do-repositorio
-```
-
-> O comando git clone cria uma cópia local do repositório para desenvolvimento.
-
-### 3️⃣ Preparação do Ambiente de Execução
-
-Você pode executar o projeto de duas formas. Escolha apenas uma.
-
-#### 🔹 Opção A – Ambiente Python Local
-
-**Requisitos:**
-
-- Python 3.10 ou 3.11
-- pip
-
-**Instale as dependências:**
-
-```bash
-pip install -r requirements.txt
-```
-
-#### 🔹 Opção B – Dev Container (Recomendado)
-
-Este repositório inclui um Dev Container, garantindo um ambiente padronizado.
-
-**Requisitos:**
-
-- VS Code
-- Docker instalado
-- Extensão Dev Containers
-
-**Passos:**
-
-1. Abra o repositório no VS Code
-2. Clique em “Reopen in Container”
-3. Aguarde a criação automática do ambiente
-
-> ➡️ Todas as dependências serão instaladas automaticamente.
-
-## 🔐 Passo 2 – Criando sua API Key do Wokwi
-
-A simulação do projeto será executada automaticamente via GitHub Actions, utilizando o Wokwi CLI.
-
-Para isso, você precisa gerar uma API Key.
-
-1. Acesse: https://wokwi.com/dashboard/ci
-2. Faça login (Google ou GitHub)
-3. Clique em Generate API Token
-4. Copie a chave gerada (exemplo: wokwi-xxxxxxxx)
-
->⚠️ Importante
-- Nunca faça commit dessa chave
-- Ela deve ser armazenada apenas como secret no GitHub
-
-## 🔒 Passo 3 – Configurando a API Key no GitHub (Secrets)
-
-**No repositório do seu Fork:**
-
-1. Vá em Settings
-2. Acesse Secrets and variables → Actions
-3. Clique em New repository secret
-4. Nome: WOKWI_API_KEY
-5. Valor: sua chave gerada
-6. Salve
-
-> ✔️ As GitHub Actions do template já estão preparadas para usar essa variável automaticamente.
-
-## 🧠 Passo 4 – Desafio Técnico
-
-Você deverá desenvolver um projeto de sistemas embarcados simulados, utilizando Python e Wokwi.
-
-### 📁 Estrutura mínima esperada
-
-```text
-/project
- ├── src/
- │   └── main.py        # Código principal do projeto
- ├── wokwi.toml         # Configuração da simulação
- ├── diagram.json       # Circuito no Wokwi
- └── README.md          # Explicação do seu projeto
-```
-
-> Você pode expandir essa estrutura se desejar, desde que mantenha os arquivos essenciais.
-
-### 🛠 Como Desenvolver seu Projeto
-
-O desenvolvimento acontece principalmente nos arquivos abaixo:
-
-#### 1️⃣ src/main.py
-
-- Código Python executado na simulação
-- Implementa a lógica do sistema embarcado
-- Exemplos: controle de LEDs, leitura de sensores, estados, temporizações, etc.
-
-#### 2️⃣ diagram.json
-
-- Define o hardware virtual do projeto
-- Componentes como:
-  - LEDs
-  - Botões
-  - Sensores
-  - Placa microcontroladora
-
-#### 3️⃣ wokwi.toml
-
-- Configura a simulação:
-  - Tipo de placa
-  - Framework
-  - Dependências adicionais
-
-#### 4️⃣ Commit e Push
-
-Após suas alterações:
-
-```bash
-git add .
-git commit -m "Descrição clara do que foi feito"
-git push
-```
-### ⚙ Execução Automática (GitHub Actions)
-
-A cada push, o GitHub Actions irá automaticamente:
-
-- Executar o pipeline de build
-- Rodar a simulação via Wokwi CLI
-- Validar que o projeto executa sem erros
-
-### 📌 Caso algo falhe:
-
-- Vá até a aba Actions
-- Analise os logs da execução
-- Corrija e envie novamente
-
-## 📊 Critérios de Avaliação
-
-Esta etapa será avaliada considerando:
-
-- Funcionamento correto da simulação
-- Código organizado e legível
-- Estrutura de arquivos correta
-- Uso adequado do Wokwi
-- Commits claros e bem descritos
-- Projeto executando sem falhas nas Actions
-
----
-
-## 📎 Submissão Final
-
-Após concluir o desenvolvimento:
-
-1. Verifique se o projeto **executa sem erros** nas GitHub Actions  
-2. Confirme que todos os arquivos obrigatórios estão presentes  
-3. Copie o link do **seu repositório no GitHub**
-
-📤 Envie o link conforme as orientações do processo seletivo na plataforma **Moodle**.
-
----
-
-## 📝 Relatório do Candidato
-
-O arquivo **`README.md` do seu repositório** deve ser utilizado como o  
-**relatório final do desafio técnico**.
-
-Preencha todas as seções abaixo de forma **clara, objetiva e técnica**.
-
-> 💡 **Dica importante**  
-> Não é necessário um relatório extenso.  
-> O principal critério é demonstrar **clareza nas decisões técnicas**, organização e entendimento do sistema embarcado desenvolvido.
-
----
-
-### 👤 Identificação do Candidato
-
-- **Nome completo:**  
-- **GitHub:**  
-
----
+# Sistema de Inspeção Inteligente com Edge AI (IoT)
+
+## 👤 Identificação
+Nome: Pedro Odillon F. M. M. Figueiredo 
+GitHub: pedroodillon
 
 ## 1️⃣ Visão Geral da Solução
 
-Descreva, em poucas palavras:
+Este projeto implementa um sistema embarcado de inspeção baseado no conceito de Edge AI aplicado à Indústria 4.0.
 
-- Qual é o objetivo do seu projeto  
-- O que o sistema embarcado simulado faz  
-- Como o usuário interage com ele (se aplicável)
+A solução foi desenvolvida em conjunto com um modelo de Inteligência Artificial (CNN treinada com MNIST), responsável pela etapa de **percepção**.
 
----
+Neste projeto IoT, essa saída é simulada por um sinal analógico de um potenciômetro, representando a inferência do modelo embarcado.
+
+O sistema realiza:
+
+- Recebimento da saída da IA simulada
+- Processamento local no ESP32
+- Tomada de decisão em tempo real
+- Atuação física por LEDs e buzzer
 
 ## 2️⃣ Arquitetura do Sistema Embarcado
 
-Explique a arquitetura lógica do seu projeto, abordando:
+O sistema segue um fluxo típico de aplicações embarcadas industriais:
 
-- Fluxo principal do programa (`main.py`)  
-- Estrutura de estados, loops ou temporizações  
-- Como os componentes interagem entre si  
+```text
+[ Modelo IA (CNN - MNIST) ]
+↓
+[ Inferência simulada via ADC ]
+↓
+[ Firmware ESP32 ]
+↓
+[ Decisão ]
+↓
+[ Atuadores: LEDs + buzzer ]
+```
 
-Se desejar, utilize tópicos ou um pequeno diagrama em texto.
+O firmware foi estruturado com uma máquina de estados:
 
----
+- IDLE → Aguarda interação do usuário
+- READ → Realiza leitura do sensor
+- PROCESS → Interpreta o valor como saída da IA
+- ACTUATE → Atualiza os atuadores
 
-## 3️⃣ Componentes Utilizados na Simulação
+Essa abordagem melhora a organização, previsibilidade e manutenção do código.
 
-Liste os principais componentes definidos no `diagram.json`, por exemplo:
+## 3️⃣ Componentes Utilizados
 
-- Tipo de placa utilizada  
-- LEDs, botões, sensores, atuadores, etc.  
-- Função de cada componente no sistema  
-
----
+- ESP32 simulado no Wokwi
+- Botão como entrada digital
+- Potenciômetro como entrada analógica via ADC
+- LED verde para estado aprovado
+- LED amarelo para estado de atenção
+- LED vermelho para estado rejeitado
+- Buzzer para alarme sonoro
 
 ## 4️⃣ Decisões Técnicas Relevantes
 
-Explique brevemente decisões importantes tomadas durante o desenvolvimento, como:
+### Simulação da saída de IA
 
-- Organização do código  
-- Uso de funções, estados ou constantes  
-- Estratégias para temporização ou controle lógico  
+O potenciômetro foi utilizado para simular a saída de um modelo de IA, permitindo validar a lógica embarcada sem executar o modelo diretamente no hardware.
 
----
+### Máquina de estados
+
+A lógica foi organizada em estados bem definidos, evitando código monolítico e facilitando futuras melhorias.
+
+### Separação de responsabilidades
+
+O código foi dividido em funções para:
+
+- leitura da entrada
+- simulação de inferência
+- tomada de decisão
+- atualização dos atuadores
+
+### Uso de ADC e PWM
+
+O ADC foi utilizado para leitura do potenciômetro.  
+O PWM foi utilizado para controle do buzzer.
 
 ## 5️⃣ Resultados Obtidos
 
-Descreva o comportamento final do sistema:
+O sistema apresentou os seguintes resultados:
 
-- O que funciona corretamente  
-- Quais requisitos foram atendidos  
-- Resultado observado na simulação do Wokwi  
+- Leitura correta do valor analógico
+- Classificação em três estados:
+  - APPROVED
+  - WARNING
+  - REJECTED
+- Acionamento correto dos LEDs e buzzer
+- Execução estável na simulação do Wokwi
+- Pipeline de CI/CD funcionando corretamente no GitHub Actions
 
----
+## 6️⃣ Comentários Adicionais
 
-## 6️⃣ Comentários Adicionais (Opcional)
+### Integração com o desafio de IA
 
-Utilize este espaço para comentar, se desejar:
+Este projeto representa a etapa de atuação de um sistema completo de Edge AI.
 
-- Dificuldades encontradas  
-- Limitações da solução  
-- Melhorias que você faria com mais tempo  
-- Principais aprendizados durante o desafio  
+No projeto de IA, foi desenvolvido um modelo CNN para classificação e otimizado para TensorFlow Lite.
 
----
+Neste projeto IoT:
 
-> ✅ Este relatório faz parte da avaliação técnica.  
-> Clareza, objetividade e organização são tão importantes quanto o funcionamento do código.
+- A saída do modelo é simulada via ADC
+- O firmware interpreta essa saída
+- O sistema toma decisões em tempo real
+- Os atuadores refletem o resultado da classificação
 
----
+Essa integração demonstra:
 
-## 🆘 Suporte
+- IA → percepção e classificação
+- IoT → decisão e atuação
 
-Em caso de dúvidas:
+### Contexto de aplicação
 
-- Consulte o material dos cursos EAD
-- Leia atentamente este README
-- Analise os logs das GitHub Actions
-- Utilize os canais oficiais para contato com os instrutores
+A solução pode ser aplicada em inspeção de qualidade, triagem automatizada e sistemas embarcados com inferência local.
 
-Boa sorte no processo seletivo.
-Mostre sua capacidade de pensar como um engenheiro de sistemas embarcados.
-****
+### Limitações
+
+- A inferência de IA foi simulada
+- Não há comunicação externa como MQTT ou cloud
+- A interface é limitada aos atuadores físicos
+
+### Melhorias futuras
+
+- Execução real do modelo TFLite no ESP32
+- Adição de sensores como DHT22
+- Uso de display I2C para telemetria
+- Comunicação via MQTT
+- Controle de servo motor para atuação física
+
+## 🚀 Conclusão
+
+O projeto demonstra a construção de um sistema embarcado funcional e organizado, integrando conceitos de IoT, automação e Edge AI, com aplicação direta em cenários da Indústria 4.0.
