@@ -14,6 +14,7 @@ LED_RED_PIN = 27
 BUZZER_PIN = 33
 
 DEBOUNCE_TIME = 300  # milliseconds
+STATUS_INTERVAL = 1000  # milliseconds
 
 # =========================
 # Hardware setup
@@ -21,14 +22,14 @@ DEBOUNCE_TIME = 300  # milliseconds
 button = Pin(BUTTON_PIN, Pin.IN, Pin.PULL_UP)
 
 pot = ADC(Pin(POT_PIN))
-pot.atten(ADC.ATTN_11DB)  # full voltage range
+pot.atten(ADC.ATTN_11DB)
 
 led_green = Pin(LED_GREEN_PIN, Pin.OUT)
 led_yellow = Pin(LED_YELLOW_PIN, Pin.OUT)
 led_red = Pin(LED_RED_PIN, Pin.OUT)
 
 buzzer = PWM(Pin(BUZZER_PIN))
-buzzer.duty(0)  # start silent
+buzzer.duty(0)
 
 # =========================
 # System states
@@ -41,12 +42,11 @@ STATE_ACTUATE = 3
 state = STATE_IDLE
 
 last_press_time = 0
+last_status_time = 0
 current_class = 0
 current_result = ""
 
-# =========================
-# Helper functions
-# =========================
+
 def read_input():
     """Read analog value from potentiometer."""
     return pot.read()
@@ -69,7 +69,6 @@ def decide_state(cls):
 
 def update_outputs(result):
     """Update LEDs and buzzer based on system state."""
-    # Reset all outputs
     led_green.off()
     led_yellow.off()
     led_red.off()
@@ -77,46 +76,39 @@ def update_outputs(result):
 
     if result == "APPROVED":
         led_green.on()
-
     elif result == "WARNING":
         led_yellow.on()
-
     elif result == "REJECTED":
         led_red.on()
         buzzer.freq(1000)
         buzzer.duty(512)
 
 
-# =========================
-# Startup log
-# =========================
 print("Teste - Edge AI inspection simulator started")
 
-# =========================
-# Main loop
-# =========================
 while True:
     now = time.ticks_ms()
 
-    # Idle state: wait for button press
+    # Periodic log used by CI and serial monitoring
+    if time.ticks_diff(now, last_status_time) > STATUS_INTERVAL:
+        print("Teste - system running")
+        last_status_time = now
+
     if state == STATE_IDLE:
         if not button.value() and time.ticks_diff(now, last_press_time) > DEBOUNCE_TIME:
             last_press_time = now
             state = STATE_READ
 
-    # Read input from sensor
     elif state == STATE_READ:
         adc_value = read_input()
         current_class = simulate_class(adc_value)
         state = STATE_PROCESS
 
-    # Process decision logic
     elif state == STATE_PROCESS:
         current_result = decide_state(current_class)
         print("Class:", current_class, "| Result:", current_result)
         state = STATE_ACTUATE
 
-    # Actuate outputs
     elif state == STATE_ACTUATE:
         update_outputs(current_result)
         state = STATE_IDLE
