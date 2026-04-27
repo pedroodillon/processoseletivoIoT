@@ -6,15 +6,15 @@
     {
       "type": "wokwi-esp32-devkit-v1",
       "id": "esp",
-      "top": 0,
+      "top": 40,
       "left": 0,
       "attrs": {}
     },
     {
       "type": "wokwi-pushbutton",
       "id": "button",
-      "top": -70,
-      "left": -170,
+      "top": -120,
+      "left": -260,
       "attrs": {
         "color": "blue",
         "label": "Inspect"
@@ -23,15 +23,17 @@
     {
       "type": "wokwi-potentiometer",
       "id": "pot",
-      "top": 100,
-      "left": -190,
-      "attrs": {}
+      "top": 140,
+      "left": -270,
+      "attrs": {
+        "label": "AI Output"
+      }
     },
     {
       "type": "wokwi-led",
       "id": "ledGreen",
-      "top": -80,
-      "left": 230,
+      "top": -120,
+      "left": 300,
       "attrs": {
         "color": "green",
         "label": "Approved"
@@ -40,8 +42,8 @@
     {
       "type": "wokwi-led",
       "id": "ledYellow",
-      "top": 0,
-      "left": 230,
+      "top": 20,
+      "left": 300,
       "attrs": {
         "color": "yellow",
         "label": "Warning"
@@ -50,8 +52,8 @@
     {
       "type": "wokwi-led",
       "id": "ledRed",
-      "top": 80,
-      "left": 230,
+      "top": 160,
+      "left": 300,
       "attrs": {
         "color": "red",
         "label": "Rejected"
@@ -60,32 +62,33 @@
     {
       "type": "wokwi-buzzer",
       "id": "buzzer",
-      "top": 180,
-      "left": 220,
+      "top": 300,
+      "left": 290,
       "attrs": {
-        "volume": "0.1"
+        "volume": "0.1",
+        "label": "Alarm"
       }
     }
   ],
   "connections": [
-    ["esp:3V3", "button:1.l", "red", ["h-80", "v-60"]],
-    ["button:2.l", "esp:14", "blue", ["h80", "v60"]],
+    ["esp:3V3", "button:1.l", "red"],
+    ["button:2.l", "esp:D14", "blue"],
 
-    ["esp:3V3", "pot:VCC", "red", ["h-120", "v100"]],
-    ["esp:GND.1", "pot:GND", "black", ["h-130", "v130"]],
-    ["pot:SIG", "esp:34", "green", ["h90", "v-40"]],
+    ["esp:3V3", "pot:VCC", "red"],
+    ["esp:GND.1", "pot:GND", "black"],
+    ["pot:SIG", "esp:D34", "green"],
 
-    ["ledGreen:A", "esp:25", "green", ["h-80"]],
-    ["ledGreen:C", "esp:GND.2", "black", ["h-100", "v80"]],
+    ["esp:D25", "ledGreen:A", "green"],
+    ["ledGreen:C", "esp:GND.2", "black"],
 
-    ["ledYellow:A", "esp:26", "yellow", ["h-80"]],
-    ["ledYellow:C", "esp:GND.2", "black", ["h-100"]],
+    ["esp:D26", "ledYellow:A", "yellow"],
+    ["ledYellow:C", "esp:GND.2", "black"],
 
-    ["ledRed:A", "esp:27", "red", ["h-80"]],
-    ["ledRed:C", "esp:GND.2", "black", ["h-100", "v-80"]],
+    ["esp:D27", "ledRed:A", "red"],
+    ["ledRed:C", "esp:GND.2", "black"],
 
-    ["buzzer:1", "esp:33", "orange", ["h-80"]],
-    ["buzzer:2", "esp:GND.2", "black", ["h-100", "v-120"]]
+    ["esp:D33", "buzzer:1", "orange"],
+    ["buzzer:2", "esp:GND.2", "black"]
   ],
   "dependencies": {}
 }
