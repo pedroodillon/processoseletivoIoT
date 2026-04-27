@@ -25,9 +25,7 @@
       "id": "pot",
       "top": 140,
       "left": -270,
-      "attrs": {
-        "label": "AI Output"
-      }
+      "attrs": {}
     },
     {
       "type": "wokwi-led",
@@ -65,8 +63,7 @@
       "top": 300,
       "left": 290,
       "attrs": {
-        "volume": "0.1",
-        "label": "Alarm"
+        "volume": "0.1"
       }
     }
   ],
