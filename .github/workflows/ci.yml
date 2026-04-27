@@ -14,21 +14,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Build Docker image
-      run: docker build -t esp32-builder -f Dockerfile .
+      - name: Build Docker image
+        run: docker build -t esp32-builder -f Dockerfile .
 
-    - name: Run container and generate fs.bin
-      run: |
-        docker run --name esp32-fs-builder esp32-builder /bin/bash
-        
-        docker cp esp32-fs-builder:/fs.bin .
+      - name: Run container and generate fs.bin
+        run: |
+          docker run --name esp32-fs-builder esp32-builder /bin/bash
+          docker cp esp32-fs-builder:/fs.bin .
 
-    - name: Test with Wokwi
-      uses: wokwi/wokwi-ci-action@v1
-      with:
-        token: ${{ secrets.WOKWI_CLI_TOKEN }}
-        path: /
-        expect_text: 'Teste'
+      - name: Test with Wokwi
+        uses: wokwi/wokwi-ci-action@v1
+        with:
+          token: ${{ secrets.WOKWI_CLI_TOKEN }}
+          path: /
+          diagram_file: diagram.json
+          expect_text: 'Teste'
+          timeout: 30000
