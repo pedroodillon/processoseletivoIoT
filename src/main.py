@@ -1,9 +1,6 @@
 from machine import Pin, ADC, PWM
 import time
 
-print("Teste")
-print("Edge AI inspection simulator starting...")
-
 # =========================
 # Pin configuration
 # =========================
@@ -15,9 +12,6 @@ LED_YELLOW_PIN = 26
 LED_RED_PIN = 27
 
 BUZZER_PIN = 33
-
-DEBOUNCE_TIME = 300  # milliseconds
-STATUS_INTERVAL = 1000  # milliseconds
 
 # =========================
 # Hardware setup
@@ -35,21 +29,8 @@ buzzer = PWM(Pin(BUZZER_PIN))
 buzzer.duty(0)
 
 # =========================
-# System states
+# Helper functions
 # =========================
-STATE_IDLE = 0
-STATE_READ = 1
-STATE_PROCESS = 2
-STATE_ACTUATE = 3
-
-state = STATE_IDLE
-
-last_press_time = 0
-last_status_time = 0
-current_class = 0
-current_result = ""
-
-
 def read_input():
     """Read analog value from potentiometer."""
     return pot.read()
@@ -71,7 +52,7 @@ def decide_state(cls):
 
 
 def update_outputs(result):
-    """Update LEDs and buzzer based on system state."""
+    """Update LEDs and buzzer based on inspection result."""
     led_green.off()
     led_yellow.off()
     led_red.off()
@@ -87,31 +68,14 @@ def update_outputs(result):
         buzzer.duty(512)
 
 
-print("Teste - Edge AI inspection simulator started")
+# =========================
+# CI-compatible execution
+# =========================
+adc_value = read_input()
+predicted_class = simulate_class(adc_value)
+inspection_result = decide_state(predicted_class)
 
-while True:
-    now = time.ticks_ms()
+update_outputs(inspection_result)
 
-    # Periodic log used by CI and serial monitoring
-    if time.ticks_diff(now, last_status_time) > STATUS_INTERVAL:
-        print("Teste - system running")
-        last_status_time = now
-
-    if state == STATE_IDLE:
-        if not button.value() and time.ticks_diff(now, last_press_time) > DEBOUNCE_TIME:
-            last_press_time = now
-            state = STATE_READ
-
-    elif state == STATE_READ:
-        adc_value = read_input()
-        current_class = simulate_class(adc_value)
-        state = STATE_PROCESS
-
-    elif state == STATE_PROCESS:
-        current_result = decide_state(current_class)
-        print("Class:", current_class, "| Result:", current_result)
-        state = STATE_ACTUATE
-
-    elif state == STATE_ACTUATE:
-        update_outputs(current_result)
-        state = STATE_IDLE
+print("Class:", predicted_class, "| Result:", inspection_result)
+print("Teste")
