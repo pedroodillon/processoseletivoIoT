@@ -51,9 +51,11 @@ def read_input():
     """Read analog value from potentiometer."""
     return pot.read()
 
+
 def simulate_class(adc_value):
-    """Map ADC range (0–4095) to class range (0–9)."""
+    """Map ADC range (0-4095) to class range (0-9)."""
     return int((adc_value / 4095) * 9)
+
 
 def decide_state(cls):
     """Convert class into system decision."""
@@ -63,6 +65,7 @@ def decide_state(cls):
         return "WARNING"
     else:
         return "REJECTED"
+
 
 def update_outputs(result):
     """Update LEDs and buzzer based on system state."""
@@ -82,6 +85,12 @@ def update_outputs(result):
         led_red.on()
         buzzer.freq(1000)
         buzzer.duty(512)
+
+
+# =========================
+# Startup log
+# =========================
+print("Teste - Edge AI inspection simulator started")
 
 # =========================
 # Main loop
